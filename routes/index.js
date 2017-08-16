@@ -4,20 +4,32 @@ var Hotel = require('../models').Hotel;
 var Restaurant = require('../models').Restaurant;
 var Activity = require('../models').Activity;
 
+router.use('/hotels', require('./hotels.js'));
+router.use('/restaurants', require('./restaurants.js'));
+router.use('/activities', require('./activities.js'));
+router.use('/days', require('./days.js'));
+
+
 router.get('/', function(req, res, next) {
-  Promise.all([
-    Hotel.findAll(),
-    Restaurant.findAll(),
-    Activity.findAll()
-  ])
-  .spread(function(dbHotels, dbRestaurants, dbActivities) {
-    res.render('index', {
-      templateHotels: dbHotels,
-      templateRestaurants: dbRestaurants,
-      templateActivities: dbActivities
-    });
-  })
-  .catch(next);
+  res.render('index');
 });
+
+
+// router.get('/', function(req, res, next) {
+//   Promise.all([
+//     Hotel.findAll(),
+//     Restaurant.findAll(),
+//     Activity.findAll()
+//   ])
+//   .spread(function(dbHotels, dbRestaurants, dbActivities) {
+//     res.render('index', {
+//       templateHotels: dbHotels,
+//       templateRestaurants: dbRestaurants,
+//       templateActivities: dbActivities
+//     });
+//   })
+//   .catch(next);
+// });
+
 
 module.exports = router;

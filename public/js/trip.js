@@ -41,6 +41,9 @@ var tripModule = (function () {
  // ~~~~~~~~~~~~~~~~~~~~~~~
     // before calling `addDay` or `deleteCurrentDay` that update the frontend (the UI), we need to make sure that it happened successfully on the server
   // ~~~~~~~~~~~~~~~~~~~~~~~
+//
+// PICK UP HERE TOMORROW: VERIFY NEWLY POSTED DAY TO DATABASE AND THEN ADD DAY TO LOCAL FRONT END STORAGE
+//
   $(function () {
     $addButton.on('click', addDay);
     $removeButton.on('click', deleteCurrentDay);
