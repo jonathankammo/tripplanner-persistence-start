@@ -10,6 +10,26 @@ var Day = db.define('day', {
       return 'day';
     }
   }
+}, {
+    hooks: {
+        afterBulkDestroy: function(obj) {
+            console.log(obj);
+            return Day.findAll({
+                where: {
+                    number: {
+                        $gt: obj.where.number
+                    }
+                }
+            })
+            .then(function(daysAfterDeletedRows) {
+                return Promise.all(daysAfterDeletedRows.map(function(day) {
+                    return day.update({
+                        number: day.number - 1
+                    });
+                }))
+            });
+        }
+    }
 });
 
 module.exports = Day;

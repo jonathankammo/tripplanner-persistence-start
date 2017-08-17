@@ -14,6 +14,17 @@ router.get('/', function(req, res) {
     });
 });
 
+// This next route just tested eager loading //
+
+// router.get('/testingEager', function(req, res) {
+//     Day.findAll({
+//         include: [Hotel, Restaurant, Activity]
+//     })
+//     .then(function(dbDays) {
+//         res.json(dbDays);
+//     });
+// });
+
 router.post('/', function(req, res) {
     Day.findOrCreate({where: {number: req.body.number}})
     .then(function(createdDay) {
@@ -56,5 +67,16 @@ router.put('/:id/activity/:activity', function(req, res, next) {
     })
     .catch(next);
 });
+
+router.delete('/:id', function(req, res, next) {
+    Day.destroy({
+        where: {
+            number: req.params.id
+        }
+    })
+    .then(function(deletedDayRow) {
+        res.json(deletedDayRow);
+    });
+})
 
 module.exports = router;

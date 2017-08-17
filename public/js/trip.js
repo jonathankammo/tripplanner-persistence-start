@@ -42,17 +42,43 @@ var tripModule = (function () {
  // ~~~~~~~~~~~~~~~~~~~~~~~
     // before calling `addDay` or `deleteCurrentDay` that update the frontend (the UI), we need to make sure that it happened successfully on the server
   // ~~~~~~~~~~~~~~~~~~~~~~~
-//
-// PICK UP HERE TOMORROW: VERIFY NEWLY POSTED DAY TO DATABASE AND THEN ADD DAY TO LOCAL FRONT END STORAGE
-//
+  
+// This was just us testing Eager Loading before the review video //
+
+  // $(function() {
+  //   $.get('/days/testingEager')
+  //   .then(function(dayObj) {
+  //     console.log(dayObj[1].hotel.name);
+  //   });
+  // });
+  
   $(function () {
-    $addButton.on('click', function() {
-      $.post('/days', { number: days.length + 1 })
-      .then(function() {
-        return addDay();
-      });
+    $.post('/days', { number: 1 })
+    .then(function() {
+      $.get('/days')
+      .then(function(dayRows) {
+        // dayRows.templateDays.forEach(addDay);
+        for (var i = 1; i < dayRows.templateDays.length; i++) {
+          addDay();
+        }
+      })
+    })
+    .then(function() {
+      $addButton.on('click', function() {
+        $.post('/days', { number: days.length + 1 })
+        .then(function() {
+          return addDay();
+        })
+      })
+    })
+    .then(function() {
+      $removeButton.on('click', function() {
+        $.ajax({ method: 'DELETE', url: `/days/${currentDay.number}`})
+        .then(function() {
+          return deleteCurrentDay();
+        });
+      })
     });
-    $removeButton.on('click', deleteCurrentDay);
   });
 
 
