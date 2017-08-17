@@ -24,28 +24,22 @@ $(function () {
     // make all the option tags (second arg of `forEach` is a `this` binding)
     $.get('/hotels')
     .then(function(hotels) {
+      console.log(hotels);
       hotels.templateHotels.forEach(makeOption, $hotelSelect);
+      return attractionsModule.loadEnhancedAttractions('hotels', hotels.templateHotels);
     });
-
+    
     $.get('/restaurants')
     .then(function(restaurants) {
       restaurants.templateRestaurants.forEach(makeOption, $restaurantSelect);
+      return attractionsModule.loadEnhancedAttractions('restaurants', restaurants.templateRestaurants);
     });
-
+ 
     $.get('/activities')
     .then(function(activities) {
       activities.templateActivities.forEach(makeOption, $activitySelect);
+      return attractionsModule.loadEnhancedAttractions('activities', activities.templateActivities);
     });
-    // hotels.forEach(makeOption, $hotelSelect);
-    // restaurants.forEach(makeOption, $restaurantSelect);
-    // activities.forEach(makeOption, $activitySelect);
-
-    // Once you've made AJAX calls to retrieve this information,
-    // call attractions.loadEnhancedAttractions in the fashion
-    // exampled below in order to integrate it.
-    // attractionsModule.loadEnhancedAttractions('hotels', hotels);
-    // attractionsModule.loadEnhancedAttractions('restaurants', restaurants);
-    // attractionsModule.loadEnhancedAttractions('activities', activities);
 
     function makeOption(databaseAttraction) {
         var $option = $('<option></option>') // makes a new option tag

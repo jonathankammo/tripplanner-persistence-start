@@ -101,14 +101,23 @@ var dayModule = (function () {
     // adding to the day object
     switch (attraction.type) {
       case 'hotel':
+      $.ajax({method: 'PUT', url: `/days/${this.number}/hotel/${attraction.id}`})
+      .then(function(dayRow) {
         if (this.hotel) this.hotel.hide();
         this.hotel = attraction;
+      });
         break;
       case 'restaurant':
+      $.ajax({method: 'PUT', url: `/days/${this.number}/restaurant/${attraction.id}`})
+      .then(function(dayRow) {
         utilsModule.pushUnique(this.restaurants, attraction);
+      });
         break;
       case 'activity':
+      $.ajax({method: 'PUT', url: `/days/${this.number}/activity/${attraction.id}`})
+      .then(function(dayRow) {
         utilsModule.pushUnique(this.activities, attraction);
+      });
         break;
       default: console.error('bad type:', attraction);
     }

@@ -15,6 +15,7 @@
  * which take `attraction` objects and pass them to `currentDay`.
  */
 
+
 var tripModule = (function () {
 
   // application state
@@ -45,7 +46,12 @@ var tripModule = (function () {
 // PICK UP HERE TOMORROW: VERIFY NEWLY POSTED DAY TO DATABASE AND THEN ADD DAY TO LOCAL FRONT END STORAGE
 //
   $(function () {
-    $addButton.on('click', addDay);
+    $addButton.on('click', function() {
+      $.post('/days', { number: days.length + 1 })
+      .then(function() {
+        return addDay();
+      });
+    });
     $removeButton.on('click', deleteCurrentDay);
   });
 
